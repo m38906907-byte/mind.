@@ -1412,10 +1412,10 @@ div.secondary-actions {
         
         }
    
-   .tg-fab-icon { width: 18px; height: 18px ; }
+   .tg-fab-icon { width: 20px; height: 20px ; }
 
    .tg-fab-text {
-      font-size : 15.5px;
+      font-size : 13.5px;
       text-align: center;
    }
 }
