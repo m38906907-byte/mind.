@@ -1418,6 +1418,11 @@ div.secondary-actions {
       font-size : 15.5px;
       text-align: center;
    }
+
+   .action-btn {
+   border: none;
+   padding: 16px 93.2px;
+   }
 }
 
 /* ==========================================================================
