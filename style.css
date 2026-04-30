@@ -1421,7 +1421,7 @@ div.secondary-actions {
 
    .action-btn {
    border: none;
-   padding: 16px 93.2px;
+   width : 93.2px
    }
 }
 
