@@ -1172,7 +1172,7 @@ div.secondary-actions {
    position: fixed;
    bottom: 22px;
    right: 22px;
-   z-index: 9000;
+   z-index: 9;
    display: inline-flex;
    align-items: center;
    gap: 12px;
@@ -1386,7 +1386,7 @@ div.secondary-actions {
 
    .modal-actions { gap: 8px; }
 
-   .action-btn { padding: 14px 8px; font-size: 0.9rem; }
+   .action-btn { padding: 16px 93.2px; font-size: 0.9rem; }
 
    div.input-group input {
       padding: 11px 14px;
@@ -1412,16 +1412,11 @@ div.secondary-actions {
         
         }
    
-   .tg-fab-icon { width: 20px; height: 20px; }
+   .tg-fab-icon { width: 18px; height: 18px ; }
 
    .tg-fab-text {
       font-size : 15.5px;
       text-align: center;
-   }
-
-   .action-btn {
-   border: none;
-   width : 93.2px
    }
 }
 
