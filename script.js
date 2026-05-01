@@ -986,7 +986,7 @@ function sendOrder(platform) {
     const distEl = document.getElementById('userDist');
     const studentNameInput = document.getElementById('studentName');
 
-    const phone = nameEl ? phoneEl.value.trim() : "";
+    const phone = phoneEl ? phoneEl.value.trim() : "";
     const phone2 = phone2El ? phone2El.value.trim() : "";
     const city = cityEl ? cityEl.value : "";
     const dist = distEl ? distEl.value.trim() : "";
@@ -1001,7 +1001,7 @@ function sendOrder(platform) {
         }
     }
 
-    if (phone.length !== 11 || !phone.startsWith("")) {
+    if (phone.length !== 11 || !phone.startsWith("07")) {
         alert("⚠️ عذراً، رقم الهاتف الأساسي يجب أن يتكون من 11 رقم ويبدأ بـ 07 حصراً.");
         if (phoneEl) phoneEl.focus();
         return;
