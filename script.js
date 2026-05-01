@@ -979,7 +979,6 @@ function applyDiscount() {
 }
 
 function sendOrder(platform) {
-    // 1. جلب العناصر والتأكد من وجودها
     const nameEl = document.getElementById('userName');
     const phoneEl = document.getElementById('userPhone');
     const phone2El = document.getElementById('userPhone2');
@@ -987,54 +986,47 @@ function sendOrder(platform) {
     const distEl = document.getElementById('userDist');
     const studentNameInput = document.getElementById('studentName');
 
-    // 2. استخراج القيم
-    const name = nameEl ? nameEl.value.trim() : "غير محدد";
-    const phone = phoneEl ? phoneEl.value.trim() : "";
+    const phone = nameEl ? phoneEl.value.trim() : "";
     const phone2 = phone2El ? phone2El.value.trim() : "";
     const city = cityEl ? cityEl.value : "";
     const dist = distEl ? distEl.value.trim() : "";
 
-    // --- الجزء المصلح لحقل اسم الطالب ---
     let studentName = "";
-    // إذا كان الحقل موجوداً وغير مقفول (يعني الطلب 75 ألف فما فوق)
     if (studentNameInput && !studentNameInput.readOnly) {
         studentName = studentNameInput.value.trim();
-        // إذا كان مفتوحاً لكنه فارغ، نمنع الإرسال
         if (studentName === "") {
             alert("⚠️ يرجى كتابة اسم الطالب الرباعي أولاً لإكمال الطلب.");
             studentNameInput.focus();
-            return; // توقف هنا ولا تفتح الواتساب/تليجرام
+            return;
         }
     }
-    // ------------------------------------
 
-    // 3. التحقق من الهاتف الأساسي
     if (phone.length !== 11 || !phone.startsWith("")) {
         alert("⚠️ عذراً، رقم الهاتف الأساسي يجب أن يتكون من 11 رقم ويبدأ بـ 07 حصراً.");
         if (phoneEl) phoneEl.focus();
         return;
     }
 
-    // 4. التحقق من المحافظة والمنطقة
     if (city === "" || dist === "") {
         alert("يرجى اختيار المحافظة وكتابة المنطقة أولاً.");
         return;
     }
 
-    // 5. تحديد السعر النهائي
-    let originalTotal = document.getElementById('totalPrice') ? document.getElementById('totalPrice').innerText.replace(/[^0-9]/g, '') : "0";
-    let isDiscountVisible = document.getElementById('discountRow') && document.getElementById('discountRow').style.display === 'flex';
-    let priceToMessage = (isDiscountVisible && typeof finalPriceWithDelivery !== 'undefined' && finalPriceWithDelivery > 0) 
-                         ? finalPriceWithDelivery 
-                         : originalTotal;
+    let totalPriceEl = document.getElementById('totalPrice');
+    let priceToMessage = "0";
+    if (totalPriceEl) {
+        priceToMessage = totalPriceEl.innerText.replace(/[^0-9]/g, '');
+    }
+    if (!priceToMessage) {
+        priceToMessage = "0";
+    }
+    priceToMessage = Number(priceToMessage).toLocaleString('en-US');
 
-    // 6. قائمة الطلبات
     let itemsList = cart.map(item => `- ${item.name}`).join('\n');
 
-    // 7. نص الرسالة
     let message = `\n${itemsList}\n\n` +
                   (studentName ? `اسم الطالب الرباعي : ${studentName}\n` : "") +
-                                    `الهاتف الأساسي : ${phone}\n` +
+                  `الهاتف الأساسي : ${phone}\n` +
                   `الهاتف الإضافي : ${phone2 || "لا يوجد"}\n` +
                   `المحافظة : ${city}\n` +
                   `المنطقة : ${dist}\n\n` +
@@ -1042,12 +1034,11 @@ function sendOrder(platform) {
 
     const encodedMessage = encodeURIComponent(message);
 
-    // 8. الإرسال للمنصة المختارة
     if (platform === 'whatsapp') {
-        const whatsappNumber = "9647763272728"; 
+        const whatsappNumber = "9647763272728";
         window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
     } else if (platform === 'telegram') {
-        const telegramUser = "Mindh1"; 
+        const telegramUser = "Mindh1";
         window.open(`https://t.me/${telegramUser}?text=${encodedMessage}`, '_blank');
     }
 }
